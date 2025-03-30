@@ -4,7 +4,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-export default function useCreateJournal(id: Id<"journals">) {
+export default function useCreateJournal() {
   const router = useRouter();
   const createJournal = useMutation(api.journals.create);
 

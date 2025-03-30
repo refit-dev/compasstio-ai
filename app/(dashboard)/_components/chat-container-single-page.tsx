@@ -13,7 +13,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ChatContainerSinglePage = () => {
   const [inputValue, setInputValue] = useState("");
-  const receiver_id = useParams().id as string;
+  const params = useParams() ?? {};
+  const receiver_id = typeof params.id === 'string' ? params.id :
+    Array.isArray(params.id) ? params.id[0] : '';
   const { isMobile } = useWindowPositionAndMobile();
   const { isSlideOut } = useSlideState();
 

@@ -109,8 +109,7 @@ const ChatbotContainer: React.FC = () => {
         setIsBlocked(true);
       }
     }
-
-  }, [freeTrail])
+  }, [freeTrail]);
 
 
   return (
@@ -166,8 +165,3 @@ const ChatbotContainer: React.FC = () => {
 };
 
 export default ChatbotContainer;
-
-
-
-
-

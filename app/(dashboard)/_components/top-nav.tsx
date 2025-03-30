@@ -12,7 +12,7 @@ import TopNavLiveSections from './top-nav/top-nav-livesection';
 const TopNav = () => {
 
   const pathname = usePathname()
-  const currentPath = pathname.split('/')[1];
+  const currentPath = pathname?.split('/')[1] || '';
 
   const renderTopNavComponent = () => {
     switch (currentPath) {

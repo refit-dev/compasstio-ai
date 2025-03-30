@@ -13,7 +13,8 @@ import { useEffect, useState } from "react";
 
 
 const TitleChatWithGroups = () => {
-  const { id } = useParams<{ id: Id<"users"> }>();
+  const params = useParams<{ id: Id<"users"> }>();
+  const id = params?.id;
 
   let friendInfo = id ? useQuery(api.users.getFriend, { id: id }) : null;
 
@@ -47,7 +48,7 @@ const TitleChatWithGroups = () => {
           <div
             className=
             "flex shrink-0 items-center justify-end">
-            <OperationsMenu id={id} />
+            {id && <OperationsMenu id={id} />}
           </div>
         </div>
       </div>

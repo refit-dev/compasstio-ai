@@ -20,7 +20,8 @@ const regex = new RegExp('"text": "([^"]*)"');
 
 export function JournalCard({ _id, title, description, creationTime }: CardData) {
 
-  const isActive = _id === useParams().journalId;
+  const params = useParams();
+  const isActive = _id === params?.journalId;
 
   //const regex = /regex-pattern/;
   const match = description.match(regex);

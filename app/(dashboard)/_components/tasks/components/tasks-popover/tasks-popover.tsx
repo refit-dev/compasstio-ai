@@ -38,8 +38,9 @@ export function TaskStatusPopover() {
   const [open, setOpen] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
   const [selectedStatus, setSelectedStatus] = React.useState<Status>()
-  const { taskId } = useParams<{ taskId: Id<"tasks"> }>();
-  const initialData = useQuery(api.tasks.getById, { taskId })
+  const params = useParams<{ taskId: Id<"tasks"> }>();
+  const taskId = params?.taskId;
+  const initialData = useQuery(api.tasks.getById, taskId ? { taskId } : "skip")
 
   const updateTaskStatus = useMutation(api.tasks.update);
 
@@ -59,10 +60,12 @@ export function TaskStatusPopover() {
   }, [taskId, initialData?.status, TaskStatus]);
 
   React.useEffect(() => {
-    updateTaskStatus({
-      id: taskId,
-      status: selectedStatus?.value.toString()
-    })
+    if (taskId && selectedStatus?.value) {
+      updateTaskStatus({
+        id: taskId,
+        status: selectedStatus.value.toString()
+      })
+    }
   }, [selectedStatus, updateTaskStatus, taskId]);
 
 

@@ -15,7 +15,8 @@ export default function GroupMessages({ sender_id, message }: Props) {
 
 
   const { user } = useUser();
-  const receiver_id = useParams().id as string;
+  const params = useParams();
+  const receiver_id = typeof params?.id === 'string' ? params.id : params?.id?.[0] ?? '';
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -30,8 +31,7 @@ export default function GroupMessages({ sender_id, message }: Props) {
 
   useEffect(() => {
     scrollToBottom();
-  }, [message]);
-
+  }, [scrollToBottom, message]);
 
   return (
     <div className="flex flex-col mx-auto w-full space-y-8 pb-12  overflow-y-auto">

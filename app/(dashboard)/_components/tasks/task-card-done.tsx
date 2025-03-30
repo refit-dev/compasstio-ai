@@ -28,7 +28,8 @@ const regex = new RegExp('"text": "([^"]*)"');
 
 export function TaskCardDone({ _id, title, description, status, creationTime, dueDate }: ChatCardProps) {
   const formatted = useFormattedTime(creationTime);
-  const isActive = _id === useParams().taskId;
+  const params = useParams();
+  const isActive = _id === params?.taskId;
 
   const match = description.match(regex);
   const Description = match ? match[1] : "No match found";

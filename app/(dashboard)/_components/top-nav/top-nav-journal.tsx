@@ -12,8 +12,9 @@ interface TitleProps {
 }
 
 const TopNavJournals = () => {
-  const { journalId } = useParams<{ journalId: Id<"journals"> }>();
-  const { createJournal } = useCreateJournal(journalId)
+  const params = useParams<{ journalId: Id<"journals"> }>();
+  const journalId = params?.journalId;
+  const { createJournal } = useCreateJournal()
 
 
   let journal = journalId ? useQuery(api.journals.getById, { journalId }) : null;
@@ -44,4 +45,3 @@ const TopNavJournals = () => {
 };
 
 export default TopNavJournals;
-

@@ -39,7 +39,8 @@ export function CardFriends({ friends_Id, _creationTime, message, isRead }: Card
 
   const friendInfo = useQuery(api.users.getFriend, { id: friends_Id })
 
-  const isActive = friends_Id === useParams().id;
+  const params = useParams();
+  const isActive = params?.id ? friends_Id === params.id : false;
 
   // Set the active friend ID
   if (isActive && friends_Id !== activeFriendId) {
