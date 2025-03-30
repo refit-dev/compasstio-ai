@@ -4,7 +4,7 @@ import { useParticipant, useMeeting } from "@videosdk.live/react-sdk";
 import { useTheme } from "@material-ui/core";
 import { MicOff } from "@material-ui/icons";
 import ScreenShare from "@material-ui/icons/ScreenShare";
-import { nameTructed } from "/Users/mekdesyared/compassion-ai/utils/helper";
+import { nameTructed } from "../../../../../../utils/helper";
 import ReactPlayer from "react-player";
 
 interface PresenterViewProps {
