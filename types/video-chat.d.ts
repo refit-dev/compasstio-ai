@@ -1,4 +1,5 @@
 import React from 'react';
+import { Participant as BaseParticipant } from '@videosdk.live/react-sdk';
 
 interface DeviceSelection {
   id: string | null;
@@ -38,10 +39,18 @@ interface MeetingContainerProps {
   webcamEnabled: boolean;
 }
 
+interface Participant extends BaseParticipant {
+  webcamStream: MediaStream | null;
+  webcamOn: boolean;
+  micOn: boolean;
+  displayName: string;
+}
+
 export {
   DeviceSelection,
   RaisedHandParticipant,
   MeetingConfig,
   TabItem,
-  MeetingContainerProps
+  MeetingContainerProps,
+  Participant
 };

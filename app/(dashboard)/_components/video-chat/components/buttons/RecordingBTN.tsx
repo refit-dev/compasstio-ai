@@ -1,11 +1,19 @@
-import React, { useEffect, useMemo, useRef } from "react";
 import { Constants, useMeeting } from "@videosdk.live/react-sdk";
-import { OutlinedButton } from "../OutlinedButton";
-import RecordingIcon from "../../icons/Bottombar/RecordingIcon";
-import useIsRecording from "../MeetingContainer/useIsRecording";
+import React, { useEffect, useMemo, useRef } from "react";
 import recordingBlink from "../../animations/recording-blink.json";
+import useIsRecording from "../MeetingContainer/useIsRecording";
+import RecordingIcon from "../../icons/Bottombar/RecordingIcon";
+import { OutlinedButton } from "../OutlinedButton";
 
-export const RecordingBTN = () => {
+interface RecordingBTNProps {
+    selectMicDeviceId: string | null;
+    setSelectMicDeviceId: (id: string | null) => void;
+}
+
+export const RecordingBTN = ({
+    selectMicDeviceId,
+    setSelectMicDeviceId,
+}: RecordingBTNProps) => {
     const mMeeting = useMeeting();
     const defaultOptions = {
         loop: true,
@@ -22,6 +30,7 @@ export const RecordingBTN = () => {
     const recordingState = mMeeting?.recordingState;
 
     const isRecording = useIsRecording();
+
     const isRecordingRef = useRef(isRecording);
 
     useEffect(() => {
@@ -41,9 +50,9 @@ export const RecordingBTN = () => {
         const isRecording = isRecordingRef.current;
 
         if (isRecording) {
-            stopRecording?.();
+            stopRecording();
         } else {
-            startRecording?.();
+            startRecording();
         }
     };
 
@@ -52,6 +61,16 @@ export const RecordingBTN = () => {
             Icon={RecordingIcon}
             onClick={_handleClick}
             isFocused={isRecording}
+            bgColor=""
+            badge={null}
+            disabledOpacity={0.7}
+            renderRightComponent={null}
+            disabled={false}
+            large={false}
+            btnID=""
+            color=""
+            focusIconColor=""
+            borderColor=""
             tooltip={
                 recordingState === Constants.recordingEvents.RECORDING_STARTED
                     ? "Stop Recording"
@@ -65,16 +84,6 @@ export const RecordingBTN = () => {
             }
             lottieOption={isRecording ? defaultOptions : null}
             isRequestProcessing={isRequestProcessing}
-            bgColor={"transparent"}
-            badge={""}
-            disabledOpacity={1}
-            renderRightComponent={() => null}
-            disabled={false}
-            large={false}
-            btnID={"RecordingBTN"}
-            color={""}
-            focusIconColor={"black"}
-            borderColor={""}
         />
     );
 };

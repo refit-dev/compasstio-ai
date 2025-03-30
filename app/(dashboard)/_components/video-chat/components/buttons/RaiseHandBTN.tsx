@@ -1,55 +1,43 @@
 import React from "react";
-import { OutlinedButton } from "../OutlinedButton";
-import { MobileIconButton } from "../MobileIconButton";
-import RaiseHandIcon from "../../icons/Bottombar/RaiseHandIcon";
 import { usePubSub } from "@videosdk.live/react-sdk";
+import { OutlinedButton } from "../OutlinedButton";
+import { PanTool as RaiseHandIcon } from "@material-ui/icons";
 
-interface ButtonProps {
+interface RaiseHandBTNProps {
     isMobile: boolean;
     isTab: boolean;
 }
 
-export const RaiseHandBTN = ({ isMobile, isTab }: ButtonProps) => {
+export const RaiseHandBTN: React.FC<RaiseHandBTNProps> = ({
+    isMobile,
+    isTab,
+}) => {
     const { publish } = usePubSub("RAISE_HAND");
 
-    const RaiseHand = () => {
-        publish("Raise Hand", { persist: true });
+    const handleRaiseHand = () => {
+        publish("Raise hand", {
+            persist: false,
+        });
     };
 
-    return isMobile || isTab ? (
-        <MobileIconButton
-            tooltipTitle={"Raise hand"}
-            Icon={RaiseHandIcon}
-            onClick={RaiseHand}
-            badge={""}
-            isFocused={false}
-            bgColor={"transparent"}
-            disabledOpacity={1}
-            focusIconColor={"black"}
-            disabled={false}
-            large={false}
-            btnID={"RaiseHandBTN"}
-            lottieOption={null}
-            buttonText={"Raise Hand"}
-        />
-    ) : (
+    return (
         <OutlinedButton
-            onClick={RaiseHand}
+            Icon={RaiseHandIcon}
+            onClick={handleRaiseHand}
+            isFocused={false}
             tooltip={"Raise Hand"}
-            bgColor={"transparent"}
             badge={""}
+            lottieOption={null}
             disabledOpacity={1}
-            focusIconColor={"black"}
+            renderRightComponent={() => null}
             disabled={false}
             large={false}
             btnID={"RaiseHandBTN"}
-            lottieOption={null}
-            Icon={RaiseHandIcon}
-            isFocused={false}
-            renderRightComponent={() => null}
             color={""}
+            focusIconColor={"black"}
             isRequestProcessing={false}
             borderColor={""}
+            bgColor={"transparent"}
         />
     );
 };

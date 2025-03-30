@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
 
 interface MeetingState {
   meetingId: string | null;
@@ -17,6 +16,8 @@ interface MeetingActions {
   resetMeetingState: () => void;
 }
 
+type MeetingStore = MeetingState & MeetingActions;
+
 const initialState: MeetingState = {
   meetingId: null,
   token: null,
@@ -27,47 +28,18 @@ const initialState: MeetingState = {
   },
 };
 
-export const useMeetingStore = create<MeetingState & MeetingActions>()(
-  devtools(
-    persist(
-      (set) => ({
-        ...initialState,
-        setMeetingDetails: (details) =>
-          set(
-            {
-              meetingId: details.meetingId,
-              token: details.token,
-              participantName: details.participantName,
-            },
-            false,
-            'setMeetingDetails'
-          ),
-        setVideoState: (state) =>
-          set(
-            (prevState) => ({
-              videoState: {
-                ...prevState.videoState,
-                ...state,
-              },
-            }),
-            false,
-            'setVideoState'
-          ),
-        resetMeetingState: () =>
-          set(
-            initialState,
-            false,
-            'resetMeetingState'
-          ),
-      }),
-      {
-        name: 'meeting-storage',
-        partialize: (state) => ({
-          meetingId: state.meetingId,
-          token: state.token,
-          participantName: state.participantName,
-        }),
-      }
-    )
-  )
-); 
+export const useMeetingStore = create<MeetingStore>((set) => ({
+  ...initialState,
+  setMeetingDetails: (details) => set({
+    meetingId: details.meetingId,
+    token: details.token,
+    participantName: details.participantName
+  }),
+  setVideoState: (state) => set((prevState) => ({
+    videoState: {
+      ...prevState.videoState,
+      ...state,
+    }
+  })),
+  resetMeetingState: () => set(initialState)
+}));

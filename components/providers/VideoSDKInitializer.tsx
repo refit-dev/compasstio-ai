@@ -43,7 +43,7 @@ export default function VideoSDKInitializer(): null {
 
     // Enhanced error handler for VideoSDK
     const originalOnError = window.onerror;
-    window.onerror = function(message: string | Event, source?: string, lineno?: number, colno?: number, error?: Error): boolean {
+    window.onerror = function (message: string | Event, source?: string, lineno?: number, colno?: number, error?: Error): boolean {
       if (message && typeof message === 'string') {
         // Handle VideoSDK-specific errors
         if (message.includes('instanceof') || message.includes('VideoSDK') || message.includes('Constants')) {
@@ -83,7 +83,11 @@ export default function VideoSDKInitializer(): null {
         }
       }
 
-      return originalOnError ? originalOnError(message, source, lineno, colno, error) : false;
+      if (originalOnError) {
+        const result = originalOnError(message, source, lineno, colno, error);
+        return result === undefined ? false : Boolean(result);
+      }
+      return false;
     };
 
     // Set up periodic maintenance checks
@@ -92,7 +96,7 @@ export default function VideoSDKInitializer(): null {
       initializeVideoSDKConstants();
 
       // Check meeting connection health
-      if (window.VideoSDK?.meeting?.isConnected === false && videoState.participants.length > 0) {
+      if (window.VideoSDK?.meeting?.isConnected === false && videoState?.participants && videoState.participants.length > 0) {
         console.warn('Meeting connection lost, attempting recovery...');
         window.VideoSDK.meeting.reconnect?.();
       }
@@ -102,7 +106,7 @@ export default function VideoSDKInitializer(): null {
       window.onerror = originalOnError;
       clearInterval(maintenanceInterval);
     };
-  }, [setVideoState, videoState.participants]);
+  }, [setVideoState, videoState?.participants]);
 
   return null;
 }

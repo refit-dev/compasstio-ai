@@ -12,9 +12,10 @@ import { OperationsMenu } from "@/components/operations-menu-live-sessions";
 import { useEffect, useState } from "react";
 
 const TopNavLiveSections = () => {
-  const { id } = useParams<{ id: Id<"users"> }>();
+  const params = useParams<{ id?: Id<"users"> }>();
+  const id = params?.id;
 
-  let friendInfo = id ? useQuery(api.users.getFriend, { id: id }) : null;
+  const friendInfo = useQuery(api.users.getFriend, id ? { id } : "skip");
 
 
   const formatted = useFormattedTime(friendInfo?._creationTime || 0);
@@ -55,4 +56,3 @@ const TopNavLiveSections = () => {
 };
 
 export default TopNavLiveSections;
-

@@ -3,10 +3,13 @@
 import { useTheme } from "next-themes";
 import {
   BlockNoteEditor,
+  defaultBlockSchema,
+  defaultInlineContentSchema,
+  defaultStyleSchema,
   PartialBlock
 } from "@blocknote/core";
 import {
-  BlockNoteView,
+  BlockNoteViewRaw as BlockNoteView,
   useBlockNote
 } from "@blocknote/react";
 import "@blocknote/core/style.css";
@@ -35,23 +38,24 @@ const Editor = ({
   //   return response.url;
   // }
 
-  const editor: BlockNoteEditor = useBlockNote({
-    editable,
+  const editor = useBlockNote({
     initialContent:
       initialContent
-        ? JSON.parse(initialContent) as PartialBlock[]
+        ? JSON.parse(initialContent) as PartialBlock<typeof defaultBlockSchema, typeof defaultInlineContentSchema, typeof defaultStyleSchema>[]
         : undefined,
-    onEditorContentChange: (editor) => {
-      onChange(JSON.stringify(editor.topLevelBlocks, null, 2));
-    },
     // uploadFile: handleUpload
   })
+
+  editor.onEditorContentChange(() => {
+    onChange(JSON.stringify(editor.topLevelBlocks, null, 2));
+  });
 
   return (
     <div className="text-left" >
       <BlockNoteView
         editor={editor}
         theme={resolvedTheme === "dark" ? "dark" : "light"}
+        editable={editable}
       />
     </div>
   )

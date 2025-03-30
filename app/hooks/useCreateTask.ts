@@ -4,7 +4,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-export default function useCreateTask(id: Id<"tasks">) {
+export default function useCreateTask(id?: Id<"tasks">) {
   const router = useRouter();
   const createTask = useMutation(api.tasks.create);
 

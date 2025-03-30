@@ -16,7 +16,7 @@ interface DashboardNavProps {
 export function DashboardNav({ items }: DashboardNavProps) {
   const { isMobile } = useWindowPositionAndMobile()
   const pathname = usePathname()
-  const currentPath = `/${pathname.split('/')[1]}`;
+  const currentPath = pathname ? `/${pathname.split('/')[1]}` : '/';
 
   if (!items?.length) {
     return null

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useMeeting } from "@videosdk.live/react-sdk";
+import { useMeeting, useParticipant } from "@videosdk.live/react-sdk";
 import ReactPlayer from "react-player";
 import { MicOff } from "@material-ui/icons";
 import { nameTructed } from "@/utils/helper";
@@ -13,20 +13,23 @@ export function LocalVideoView() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [streamError, setStreamError] = useState<boolean>(false);
 
-  const { webcamStream, webcamOn, micOn, displayName } = localParticipant || {
+  const { webcamOn, micOn, displayName } = localParticipant || {
     webcamOn: false,
     micOn: false,
     displayName: "You"
   };
+  const participant = useParticipant(localParticipant?.id);
+  const webcamStream = participant?.webcamStream;
 
   const webcamMediaStream = useMemo(() => {
-    if (webcamOn && webcamStream) {
+    if (webcamOn && webcamStream && 'getVideoTracks' in webcamStream) {
       try {
-        const mediaStream = new MediaStream();
-        mediaStream.addTrack(webcamStream.track);
-        return mediaStream;
+        const mediaStream = webcamStream as unknown as MediaStream;
+        if (mediaStream.getVideoTracks().length > 0) {
+          return mediaStream;
+        }
       } catch (error) {
-        console.error("[LocalVideoView] Error creating media stream:", error);
+        console.error("[LocalVideoView] Error accessing video stream:", error);
         setStreamError(true);
         return null;
       }
@@ -89,4 +92,4 @@ export function LocalVideoView() {
       )}
     </div>
   );
-} 
+}

@@ -8,19 +8,19 @@ import {
 import { MoreHoriz as MoreHorizIcon } from "@material-ui/icons";
 import useIsTab from "@/utils/useIsTab";
 import useIsMobile from "@/utils/useIsMobile";
-import { useMeeting } from "@videosdk.live/react-sdk"; // Import useMeeting
+import { useMeeting } from "@videosdk.live/react-sdk";
 import { OutlinedButton } from "../OutlinedButton";
 
-// Import button components
-import { RaiseHandBTN } from "../buttons/RaiseHandBTN";
-import { MicBTN } from "../buttons/MicBTN";
-import { WebcamBTN } from "../buttons/WebcamBTN";
-import { ScreenShareBTN } from "../buttons/ScreenShareBTN";
-import { LeaveBTN } from "../buttons/LeaveBTN";
-import { ChatBTN } from "../buttons/ChatBTN";
-import { ParticipantsBTN } from "../buttons/ParticipantsBTN";
-import { MeetingIdCopyBTN } from "../buttons/MeetingIdCopyBTN";
-import { RecordingBTN } from "../buttons/RecordingBTN";
+// Import button components from local directory
+import { RaiseHandButton } from "./RaiseHandButton";
+import { MicButton } from "./MicButton";
+import { WebCamButton } from "./WebCamButton";
+import { ScreenShareButton } from "./ScreenShareButton";
+import { LeaveButton } from "./LeaveButton";
+import { ChatButton } from "./ChatButton";
+import { ParticipantsButton } from "./ParticipantsButton";
+import { MeetingIdCopyButton } from "./MeetingIdCopyButton";
+import { RecordingButton } from "./RecordingButton";
 
 const useStyles = makeStyles({
   popoverHoverDark: {
@@ -115,22 +115,22 @@ export function BottomBar({
       className="flex items-center justify-center"
       style={{ height: bottomBarHeight }}
     >
-      <LeaveBTN /> {/* LeaveBTN takes no props */}
-      <MicBTN
+      <LeaveButton />
+      <MicButton
         selectMicDeviceId={selectMicDeviceId}
         setSelectMicDeviceId={setSelectMicDeviceId}
         tollTipEl={tollTipEl}
         isMobile={isMobile}
         isTab={isTab}
       />
-      <WebcamBTN
+      <WebCamButton
         selectWebcamDeviceId={selectWebcamDeviceId}
         setSelectWebcamDeviceId={setSelectWebcamDeviceId}
         tollTipEl={tollTipEl}
         isMobile={isMobile}
         isTab={isTab}
       />
-      <RecordingBTN />
+      <RecordingButton />
       <OutlinedButton
         Icon={MoreHorizIcon}
         onClick={handleClickFAB}
@@ -168,11 +168,11 @@ export function BottomBar({
                 md={icon === BottomBarButtonTypes.MEETING_ID_COPY ? 3 : 2}
               >
                 {icon === BottomBarButtonTypes.RAISE_HAND ? (
-                  <RaiseHandBTN isMobile={isMobile} isTab={isTab} />
+                  <RaiseHandButton isMobile={isMobile} isTab={isTab} />
                 ) : icon === BottomBarButtonTypes.SCREEN_SHARE ? (
-                  <ScreenShareBTN isMobile={isMobile} isTab={isTab} />
+                  <ScreenShareButton isMobile={isMobile} isTab={isTab} />
                 ) : icon === BottomBarButtonTypes.CHAT ? (
-                  <ChatBTN
+                  <ChatButton
                     isMobile={isMobile}
                     isTab={isTab}
                     sideBarMode={sideBarMode}
@@ -180,7 +180,7 @@ export function BottomBar({
                     sideBarModes={sideBarModes}
                   />
                 ) : icon === BottomBarButtonTypes.PARTICIPANTS ? (
-                  <ParticipantsBTN
+                  <ParticipantsButton
                     isMobile={isMobile}
                     isTab={isTab}
                     sideBarMode={sideBarMode}
@@ -188,7 +188,7 @@ export function BottomBar({
                     sideBarModes={sideBarModes}
                   />
                 ) : icon === BottomBarButtonTypes.MEETING_ID_COPY ? (
-                  <MeetingIdCopyBTN />
+                  <MeetingIdCopyButton />
                 ) : null}
               </Grid>
             );
@@ -198,35 +198,35 @@ export function BottomBar({
     </div>
   ) : (
     <div className="md:flex lg:px-2 xl:px-6 pb-2 px-2 hidden">
-      <MeetingIdCopyBTN />
+      <MeetingIdCopyButton />
 
       <div className="flex flex-1 items-center justify-center" ref={tollTipEl}>
-        <MicBTN
+        <MicButton
           selectMicDeviceId={selectMicDeviceId}
           setSelectMicDeviceId={setSelectMicDeviceId}
           tollTipEl={tollTipEl}
           isMobile={isMobile}
           isTab={isTab}
         />
-        <WebcamBTN
+        <WebCamButton
           selectWebcamDeviceId={selectWebcamDeviceId}
           setSelectWebcamDeviceId={setSelectWebcamDeviceId}
           tollTipEl={tollTipEl}
           isMobile={isMobile}
           isTab={isTab}
         />
-        <ScreenShareBTN isMobile={isMobile} isTab={isTab} />
-        <LeaveBTN /> {/* LeaveBTN takes no props */}
+        <ScreenShareButton isMobile={isMobile} isTab={isTab} />
+        <LeaveButton />
       </div>
       <div className="flex items-center justify-center">
-        <ChatBTN
+        <ChatButton
           isMobile={isMobile}
           isTab={isTab}
           sideBarMode={sideBarMode}
           setSideBarMode={setSideBarMode}
           sideBarModes={sideBarModes}
         />
-        <ParticipantsBTN
+        <ParticipantsButton
           isMobile={isMobile}
           isTab={isTab}
           sideBarMode={sideBarMode}

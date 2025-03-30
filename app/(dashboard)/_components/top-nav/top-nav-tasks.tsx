@@ -14,7 +14,8 @@ interface TitleProps {
 }
 
 const TopNavTasks = () => {
-  const { taskId } = useParams<{ taskId: Id<"tasks"> }>();
+  const params = useParams<{ taskId?: Id<"tasks"> }>();
+  const taskId = params?.taskId;
   const isMounted = useRef(true);
 
   const { createTask } = useCreateTask(taskId)
@@ -56,4 +57,3 @@ const TopNavTasks = () => {
 };
 
 export default TopNavTasks;
-

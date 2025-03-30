@@ -19,8 +19,9 @@ import { api } from "@/convex/_generated/api"
 import { useEffect } from "react"
 
 export function DatePickerDemo() {
-  const { taskId } = useParams<{ taskId: Id<"tasks"> }>()
-  const initialData = useQuery(api.tasks.getById, { taskId })
+  const params = useParams<{ taskId?: Id<"tasks"> }>()
+  const taskId = params?.taskId
+  const initialData = useQuery(api.tasks.getById, taskId ? { taskId } : "skip")
   const [date, setDate] = React.useState<Date | undefined>(
     initialData?.dueDate ? new Date(initialData.dueDate) : undefined
   )
@@ -29,11 +30,12 @@ export function DatePickerDemo() {
   const selectedNewDate = date?.[Symbol.toPrimitive]('number')
 
   useEffect(() => {
-    // Update due date
-    updateDueDate({
-      id: taskId,
-      dueDate: selectedNewDate
-    });
+    if (taskId && selectedNewDate) {
+      updateDueDate({
+        id: taskId,
+        dueDate: selectedNewDate
+      });
+    }
   }, [selectedNewDate, taskId, updateDueDate]);
 
 
